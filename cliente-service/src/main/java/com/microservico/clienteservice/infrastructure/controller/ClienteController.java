@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
@@ -23,6 +25,11 @@ public class ClienteController {
     public Cliente buscarCliente(@PathVariable Long id) {
         return clienteService.porId(id)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+    }
+
+    @GetMapping
+    public List<Cliente> listarClientes() {
+        return clienteService.listarTodos();
     }
 
     @PutMapping("/{id}")

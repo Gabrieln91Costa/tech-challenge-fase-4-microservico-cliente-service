@@ -2,6 +2,7 @@ package com.microservico.clienteservice.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor // ✅ Adicionado para o JPA funcionar corretamente
 @Entity
 @Table(name = "clientes")
 public class Cliente {

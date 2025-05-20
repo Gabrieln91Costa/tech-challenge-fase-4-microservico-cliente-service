@@ -2,13 +2,15 @@ package com.microservico.clienteservice.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.persistence.*;
+import jakarta.persistence.Embeddable;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@Embeddable  // A classe Endereco não terá uma tabela separada, ela será embutida em Cliente
+@NoArgsConstructor  // ✅ Adicionado para resolver o erro
+@Embeddable
 public class Endereco {
 
     private String rua;

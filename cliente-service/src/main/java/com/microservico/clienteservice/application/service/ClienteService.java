@@ -8,6 +8,7 @@ import com.microservico.clienteservice.domain.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,7 +32,7 @@ public class ClienteService implements CriarCliente, AtualizarCliente, BuscarCli
 
         clienteExistente.setNome(cliente.getNome());
         clienteExistente.setDataNascimento(cliente.getDataNascimento());
-        clienteExistente.setEndereco(cliente.getEndereco());  // Corrigido aqui, de setEnderecos para setEndereco
+        clienteExistente.setEndereco(cliente.getEndereco());
 
         return clienteRepository.save(clienteExistente);
     }
@@ -44,5 +45,10 @@ public class ClienteService implements CriarCliente, AtualizarCliente, BuscarCli
     @Override
     public Optional<Cliente> porCpf(String cpf) {
         return clienteRepository.findByCpf(cpf);
+    }
+
+    // Novo método para listar todos os clientes
+    public List<Cliente> listarTodos() {
+        return clienteRepository.findAll();
     }
 }
