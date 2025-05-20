@@ -8,12 +8,12 @@ services:
     networks:
       - app-network
 
-  pedido-service:
-    build: ./pedido-service
-    ports:
-      - "8082:8080"
-    networks:
-      - app-network
+  # pedido-service:
+  #   build: ./pedido-service
+  #   ports:
+  #     - "8082:8080"
+  #   networks:
+  #     - app-network
 
   gateway:
     build: ./gateway
