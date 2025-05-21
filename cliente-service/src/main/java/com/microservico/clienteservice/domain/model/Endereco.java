@@ -4,13 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.persistence.Embeddable;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor  // ✅ Adicionado para resolver o erro
-@Embeddable
+@NoArgsConstructor
 public class Endereco {
 
     private String rua;

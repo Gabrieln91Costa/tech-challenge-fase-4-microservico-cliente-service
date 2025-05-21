@@ -21,8 +21,9 @@ public class ClienteController {
         return clienteService.criarCliente(cliente);
     }
 
+    // Alteração no tipo do @PathVariable de Long para String
     @GetMapping("/{id}")
-    public Cliente buscarCliente(@PathVariable Long id) {
+    public Cliente buscarCliente(@PathVariable String id) {  // Agora o id é String
         return clienteService.porId(id)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
     }
@@ -32,8 +33,9 @@ public class ClienteController {
         return clienteService.listarTodos();
     }
 
+    // Alteração no tipo do @PathVariable de Long para String
     @PutMapping("/{id}")
-    public Cliente atualizarCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
-        return clienteService.atualizarCliente(id, cliente);
+    public Cliente atualizarCliente(@PathVariable String id, @RequestBody Cliente cliente) {  // Agora o id é String
+        return clienteService.atualizarCliente(id, cliente); // Passando o id como String
     }
 }

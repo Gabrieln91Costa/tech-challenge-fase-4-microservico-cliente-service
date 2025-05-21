@@ -3,6 +3,7 @@ package com.microservico.clienteservice.application.service;
 import com.microservico.clienteservice.application.usecase.CriarCliente;
 import com.microservico.clienteservice.application.usecase.AtualizarCliente;
 import com.microservico.clienteservice.application.usecase.BuscarCliente;
+import com.microservico.clienteservice.domain.exception.CpfJaCadastradoException;
 import com.microservico.clienteservice.domain.model.Cliente;
 import com.microservico.clienteservice.domain.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,13 @@ public class ClienteService implements CriarCliente, AtualizarCliente, BuscarCli
     @Override
     public Cliente criarCliente(Cliente cliente) {
         if (clienteRepository.findByCpf(cliente.getCpf()).isPresent()) {
-            throw new RuntimeException("CPF já cadastrado");
+            throw new CpfJaCadastradoException();
         }
         return clienteRepository.save(cliente);
     }
 
     @Override
-    public Cliente atualizarCliente(Long id, Cliente cliente) {
+    public Cliente atualizarCliente(String id, Cliente cliente) {
         Cliente clienteExistente = clienteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
@@ -38,7 +39,7 @@ public class ClienteService implements CriarCliente, AtualizarCliente, BuscarCli
     }
 
     @Override
-    public Optional<Cliente> porId(Long id) {
+    public Optional<Cliente> porId(String id) {
         return clienteRepository.findById(id);
     }
 
@@ -47,7 +48,6 @@ public class ClienteService implements CriarCliente, AtualizarCliente, BuscarCli
         return clienteRepository.findByCpf(cpf);
     }
 
-    // Novo método para listar todos os clientes
     public List<Cliente> listarTodos() {
         return clienteRepository.findAll();
     }

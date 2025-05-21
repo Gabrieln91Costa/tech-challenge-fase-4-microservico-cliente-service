@@ -4,28 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor // ✅ Adicionado para o JPA funcionar corretamente
-@Entity
-@Table(name = "clientes")
+@NoArgsConstructor
+@Document(collection = "clientes")
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id; // ID agora é String para MongoDB
 
     private String nome;
-
-    @Column(unique = true)
     private String cpf;
-
     private LocalDate dataNascimento;
-
-    @Embedded  // Usando @Embedded para referenciar Endereco como parte do Cliente
     private Endereco endereco;
 }
