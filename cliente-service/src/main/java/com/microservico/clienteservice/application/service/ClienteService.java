@@ -51,4 +51,9 @@ public class ClienteService implements CriarCliente, AtualizarCliente, BuscarCli
     public List<Cliente> listarTodos() {
         return clienteRepository.findAll();
     }
+
+    // Novo método para validar existência do cliente por CPF
+    public boolean clienteExistePorCpf(String cpf) {
+        return clienteRepository.findByCpf(cpf).isPresent();
+    }
 }

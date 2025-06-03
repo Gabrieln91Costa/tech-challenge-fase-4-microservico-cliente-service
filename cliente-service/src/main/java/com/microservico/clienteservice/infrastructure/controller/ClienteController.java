@@ -4,6 +4,7 @@ import com.microservico.clienteservice.application.service.ClienteService;
 import com.microservico.clienteservice.domain.model.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,14 +19,29 @@ public class ClienteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente criarCliente(@RequestBody Cliente cliente) {
-        return clienteService.criarCliente(cliente);
+        Cliente clienteCriado = clienteService.criarCliente(cliente);
+        System.out.println("✅ ETAPA 01 - Cliente cadastrado com sucesso: " + clienteCriado.getNome());
+        return clienteCriado;
     }
 
-    // Alteração no tipo do @PathVariable de Long para String
-    @GetMapping("/{id}")
-    public Cliente buscarCliente(@PathVariable String id) {  // Agora o id é String
+
+    // Mantém busca por ID (opcional)
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Cliente> buscarClientePorId(@PathVariable String id) {
         return clienteService.porId(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // Novo endpoint para buscar cliente por CPF
+    @GetMapping("/{cpf}")
+    public ResponseEntity<Void> verificarClientePorCpf(@PathVariable String cpf) {
+        boolean existe = clienteService.clienteExistePorCpf(cpf);
+        if (existe) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping
@@ -33,9 +49,8 @@ public class ClienteController {
         return clienteService.listarTodos();
     }
 
-    // Alteração no tipo do @PathVariable de Long para String
-    @PutMapping("/{id}")
-    public Cliente atualizarCliente(@PathVariable String id, @RequestBody Cliente cliente) {  // Agora o id é String
-        return clienteService.atualizarCliente(id, cliente); // Passando o id como String
+    @PutMapping("/id/{id}")
+    public Cliente atualizarCliente(@PathVariable String id, @RequestBody Cliente cliente) {
+        return clienteService.atualizarCliente(id, cliente);
     }
 }
